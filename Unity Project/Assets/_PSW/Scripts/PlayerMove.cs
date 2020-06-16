@@ -9,6 +9,12 @@ public class PlayerMove : MonoBehaviour
     public float speed = 5.0f; //이동속도
     CharacterController cc; //캐릭터컨트롤러 컴포넌트
 
+    //중력적용
+    public float gravity = -20;
+    float velocityY;    //낙하속도(벨로시티는 방향과 힘을 들고 있다)
+    float jumpPower = 10; //점프파워
+    int jumpCount = 0; //점프카운트
+
     void Start()
     {
         //캐릭터컨트롤러 컴포넌트 가져오기
@@ -42,6 +48,55 @@ public class PlayerMove : MonoBehaviour
         //캐릭터컨트롤러는 충돌감지만 하고 물리가 적용안된다
         //따라서 충돌감지를 하기 위해서는 반드시
         //캐릭터컨트롤러 컴포넌트가 제공해주는 함수로 이동처리해야 한다
+        //cc.Move(dir * speed * Time.deltaTime);
+
+        //중력적용하기
+        //velocityY += gravity * Time.deltaTime;
+        //dir.y = velocityY;
+        //cc.Move(dir * speed * Time.deltaTime);
+
+        //캐릭터 점프
+        //점프버튼을 누르면 수직속도에 점프파워를 넣는다
+        //땅에 닿으면 0으로 초기화
+        //if(cc.isGrounded)//땅에 닿았냐?
+        //{
+        //}
+        //CollisionFlags.Above;
+        //CollisionFlags.Below;
+        //CollisionFlags.Sides;
+        //if (cc.collisionFlags == CollisionFlags.Below)//땅에 닿았냐?
+        //{
+        //    velocityY = 0;
+        //}
+        //if(Input.GetButtonDown("Jump"))
+        //{
+        //    velocityY = jumpPower;
+        //}
+
+        //2단 점프만 가능하도록 만들기
+        //if(cc.isGrounded) //이상하게 반응속도가 느리네?
+        //{
+        //    velocityY = 0;
+        //    jumpCount = 0;
+        //}
+        if(cc.collisionFlags == CollisionFlags.Below)
+        {
+            velocityY = 0;
+            jumpCount = 0;
+        }
+        else
+        {
+            //땅에 닿지 않은 상태이기때문에 중력적용하기
+            velocityY += gravity * Time.deltaTime;
+            dir.y = velocityY;
+        }
+        if(Input.GetButtonDown("Jump") && jumpCount < 2)
+        {
+            jumpCount++;
+            velocityY = jumpPower;
+        }
+        //중력적용 이동
         cc.Move(dir * speed * Time.deltaTime);
+
     }
 }
