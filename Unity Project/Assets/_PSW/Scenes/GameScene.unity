@@ -246,6 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51156970bad5344d93d0f352953438e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  findRange: 15
+  moveRange: 30
+  attackRange: 2
 --- !u!143 &694445394
 CharacterController:
   m_ObjectHideFlags: 0
