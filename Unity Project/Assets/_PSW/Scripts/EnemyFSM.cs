@@ -298,6 +298,7 @@ public class EnemyFSM : MonoBehaviour
         //현재상태를 이동으로 전환
         state = EnemyState.Move;
         print("상태전환 : Damaged -> Move");
+        anim.SetTrigger("Move");
     }
 
     //죽음상태 (Any State)
